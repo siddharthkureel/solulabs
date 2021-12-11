@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 
-const OrderBook = ({ connect, setUpdate, update }) => {
+const OrderBook = ({ connect, setUpdate, update, disconnect }) => {
+
     const [buyOrder, setBuyOrder] = useState([]);
     const [sellOrder, setSellOrder] = useState([]);
     const [channelID, setChannelID] = useState(0);
     let buys = [];
     let sells = [];
+
     useEffect(() => {
+
         const wss = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
+
         if (connect) {
             let msg = JSON.stringify({ 
                 event: 'subscribe', 
@@ -33,14 +37,12 @@ const OrderBook = ({ connect, setUpdate, update }) => {
                         });
                         setTimeout(() => {
                             setUpdate(true)
-                        }, 1000);
+                        }, 100);
                     } else if (update) {
-                        console.log(update)
                         const orders = data[1];
                         if (orders[2] > 0) {
                             buys.unshift(orders);
                             buys.pop();
-                            console.log(buys);
                         } else {
                             sells.unshift(orders);
                             sells.pop();
@@ -51,7 +53,18 @@ const OrderBook = ({ connect, setUpdate, update }) => {
                 }
             }
         }
-    },[connect, update])
+        if (disconnect) {
+            try {
+                wss.send({
+                    "event": "unsubscribe",
+                    "chanId": channelID
+                })
+            } catch (error) {
+                console.log(error)
+            } 
+        }
+    },[connect, update, disconnect]);
+
     return (
         <div style={styles.container}>
             <table style={styles.table}>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import logo from './bitcoin-logo.png';
 
-const Ticker = ({ connect, wss }) => {
+const Ticker = ({ connect, disconnect }) => {
+
     const [price, setPrice] = useState(0);
     const [low, setLow] = useState(0);
     const [high, setHigh] = useState(0);
@@ -11,8 +12,10 @@ const Ticker = ({ connect, wss }) => {
     
     
     useEffect(() => {
+
         const wss = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
-        if (connect){
+
+        if (connect) {
             let msg = JSON.stringify({ 
                 event: 'subscribe', 
                 channel: 'ticker', 
@@ -22,7 +25,6 @@ const Ticker = ({ connect, wss }) => {
             wss.onmessage = (msg) => {
                 const data = JSON.parse(msg.data);
                 if(Array.isArray(data[1])){
-                    // [48357, 9.941324400000003, 48363, 15.691992070000001, 191.33454815, 0.004, 48369.33454815, 7395.28560604, 50212, 47337]
                     // [ BID, BID_SIZE, ASK, ASK_SIZE, DAILY_CHANGE, DAILY_CHANGE_RELATIVE, LAST_PRICE, VOLUME, HIGH, LOW ]
                     //destructure of above data
                     const [ , , , , DAILY_CHANGE, , LAST_PRICE, VOLUME, HIGH, LOW ] = data[1]
@@ -33,10 +35,25 @@ const Ticker = ({ connect, wss }) => {
                     setHigh(HIGH.toFixed(2));
                     setVolume(VOLUME.toFixed(2));
                 }
-                   
             }
         }
-    },[connect])
+        if (disconnect) {
+            try {
+                
+                let msg = JSON.stringify({ 
+                    event: 'unsubscribe', 
+                    chanId: channelID, 
+                })
+                wss.onclose = () => wss.send(msg)
+
+            } catch (error) {
+                console.log(error)
+            } finally {
+                window.location.reload()
+            }
+        }
+        
+    },[connect, disconnect])
 
     return (
         <div style={styles.container}>
