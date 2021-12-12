@@ -5,11 +5,11 @@ const OrderBook = ({ connect, setUpdate, update, disconnect }) => {
     const [buyOrder, setBuyOrder] = useState([]);
     const [sellOrder, setSellOrder] = useState([]);
     const [channelID, setChannelID] = useState(0);
-    let buys = [];
-    let sells = [];
-
+    
     useEffect(() => {
-
+        
+        let buys = [];
+        let sells = [];
         const wss = new WebSocket('wss://api-pub.bitfinex.com/ws/2');
 
         if (connect) {
@@ -63,7 +63,7 @@ const OrderBook = ({ connect, setUpdate, update, disconnect }) => {
                 console.log(error)
             } 
         }
-    },[connect, update, disconnect]);
+    },[connect, update, disconnect, setUpdate, channelID]);
 
     return (
         <div style={styles.container}>

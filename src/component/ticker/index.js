@@ -8,6 +8,7 @@ const Ticker = ({ connect, disconnect }) => {
     const [high, setHigh] = useState(0);
     const [volume, setVolume] = useState(0);
     const [dailyChange, setDailyChange] = useState(0);
+    const [dailyChangePercent, setDailyChangePercent] = useState(0);
     const [channelID, setChannelID] = useState(0);
     
     
@@ -34,6 +35,8 @@ const Ticker = ({ connect, disconnect }) => {
                     setLow(LOW.toFixed(2));
                     setHigh(HIGH.toFixed(2));
                     setVolume(VOLUME.toFixed(2));
+                    const percentageChange = DAILY_CHANGE * 100 / LOW;
+                    setDailyChangePercent(percentageChange);
                 }
             }
         }
@@ -53,7 +56,7 @@ const Ticker = ({ connect, disconnect }) => {
             }
         }
         
-    },[connect, disconnect])
+    },[connect, disconnect, channelID])
 
     return (
         <div style={styles.container}>
@@ -62,13 +65,25 @@ const Ticker = ({ connect, disconnect }) => {
             <div style={styles.subContainer}>
                 <div style={styles.left}>
                         <span>BTC/USD</span><br/>
-                        <span>VOL &nbsp;{volume}</span><br/>
-                        <span>LOW &nbsp;{low}</span>
+                        <div>
+                            <span style={styles.silver}>VOL</span>
+                                &nbsp;{volume}&nbsp; 
+                            <span style={styles.silver}>BTC</span>
+                        </div>
+                        <div>
+                            <span style={styles.silver}>LOW</span>
+                            &nbsp;{low}
+                        </div>
                     </div>
                     <div style={styles.left}>
                         <span>{price}</span><br/>
-                        <span>{dailyChange}</span><br/>
-                        <span>HIGH &nbsp;{high}</span>
+                        <span style={dailyChange > 0 ? { color: 'green' } : { color: 'red' }} >
+                            {dailyChange} &nbsp; ({dailyChangePercent.toFixed(2)} %)
+                        </span><br/>
+                        <div>
+                            <span style={styles.silver}>HIGH</span>
+                            &nbsp;{high}
+                        </div>
                     </div>
             </div>
         </div>
@@ -102,6 +117,9 @@ const styles = {
         justifyContent: 'space-between',
         padding: '0 20px'
     },
+    silver: {
+        color: 'silver'
+    }
 }
 
 export default Ticker;
