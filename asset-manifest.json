@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/static/js/main.35b7e569.chunk.js",
-    "main.js.map": "/static/js/main.35b7e569.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.4e27e29b.js",
-    "runtime-main.js.map": "/static/js/runtime-main.4e27e29b.js.map",
-    "static/js/2.9aa94266.chunk.js": "/static/js/2.9aa94266.chunk.js",
-    "static/js/2.9aa94266.chunk.js.map": "/static/js/2.9aa94266.chunk.js.map",
-    "index.html": "/index.html",
-    "static/js/2.9aa94266.chunk.js.LICENSE.txt": "/static/js/2.9aa94266.chunk.js.LICENSE.txt",
-    "static/media/bitcoin-logo.24f2f953.png": "/static/media/bitcoin-logo.24f2f953.png"
+    "main.js": "/solulabs/static/js/main.35b7e569.chunk.js",
+    "main.js.map": "/solulabs/static/js/main.35b7e569.chunk.js.map",
+    "runtime-main.js": "/solulabs/static/js/runtime-main.56c4efef.js",
+    "runtime-main.js.map": "/solulabs/static/js/runtime-main.56c4efef.js.map",
+    "static/js/2.9aa94266.chunk.js": "/solulabs/static/js/2.9aa94266.chunk.js",
+    "static/js/2.9aa94266.chunk.js.map": "/solulabs/static/js/2.9aa94266.chunk.js.map",
+    "index.html": "/solulabs/index.html",
+    "static/js/2.9aa94266.chunk.js.LICENSE.txt": "/solulabs/static/js/2.9aa94266.chunk.js.LICENSE.txt",
+    "static/media/bitcoin-logo.24f2f953.png": "/solulabs/static/media/bitcoin-logo.24f2f953.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.4e27e29b.js",
+    "static/js/runtime-main.56c4efef.js",
     "static/js/2.9aa94266.chunk.js",
     "static/js/main.35b7e569.chunk.js"
   ]
